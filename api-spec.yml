@@ -1,0 +1,232 @@
+openapi: 3.0.3
+info:
+  title: Emercast API Specification
+  version: "1.0"
+  description: Emercast API
+servers:
+  - url: http://localhost:8080/api/v1
+security:
+  - bearerAuth: []
+paths:
+  /message:
+    post:
+      summary: Create a new broadcast message
+      operationId: postBroadcastMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - forwardUntil
+                - latitude
+                - longitude
+                - radius
+                - category
+                - severity
+                - title
+                - message
+                - imageUrl
+              properties:
+                forwardUntil:
+                  type: string
+                  format: date-time
+                latitude:
+                  type: number
+                  format: float
+                longitude:
+                  type: number
+                  format: float
+                radius:
+                  type: number
+                  format: float
+                category:
+                  type: string
+                severity:
+                  type: integer
+                title:
+                  type: string
+                message:
+                  type: string
+                imageUrl:
+                  type: string
+      responses:
+        200:
+          $ref: '#/components/responses/BroadcastMessageResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    BroadcastMessageDTO:
+      type: object
+      required:
+        - id
+        - created
+        - modified
+        - latitude
+        - longitude
+        - radius
+        - category
+        - severity
+        - title
+        - message
+        - imageUrl
+        - issuedAuthority
+      properties:
+        id:
+          type: string
+          format: uuid
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        forwardUntil:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        radius:
+          type: number
+          format: float
+        category:
+          type: string
+        severity:
+          type: integer
+        title:
+          type: string
+        message:
+          type: string
+        imageUrl:
+          type: string
+        issuedAuthority:
+          $ref: "#/components/schemas/AuthorityDTO"
+        responsePublicKey:
+          type: string
+    BroadcastReplyDTO:
+      type: object
+      required:
+        - id
+        - created
+        - messageId
+      properties:
+        id:
+          type: string
+          format: uuid
+        messageId:
+          type: string
+          format: uuid
+        created:
+          type: string
+          format: date-time
+        forwardUntil:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        message:
+          type: string
+    AuthorityDTO:
+      type: object
+      required:
+        - id
+        - parentId
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        parentId:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  responses:
+    BroadcastMessageResponse:
+      description: Response containting a broadcast message
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BroadcastMessageDTO"
+    EmptyResponse:
+      description: Empty response
+    BadRequestResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 400
+            message: Bad request
+    ForbiddenResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 401
+            message: Forbidden
+    UnauthorizedResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 403
+            message: Unauthorized
+    NotFoundResponse:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 404
+            message: Not found
+    AlreadyExistsResponse:
+      description: The resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 409
+            message: Already Exists
+    UnprocessableEntityResponse:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
+          example:
+            code: 422
+            message: Unproccessable Entity
