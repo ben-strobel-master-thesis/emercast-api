@@ -83,14 +83,14 @@ components:
           type: string
           format: uuid
         created:
-          type: string
-          format: date-time
+          type: integer
+          format: int64
         modified:
-          type: string
-          format: date-time
+          type: integer
+          format: int64
         forwardUntil:
-          type: string
-          format: date-time
+          type: integer
+          format: int64
         latitude:
           type: number
           format: float
