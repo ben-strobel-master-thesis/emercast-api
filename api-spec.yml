@@ -69,6 +69,7 @@ components:
         - id
         - created
         - modified
+        - forwardUntil
         - latitude
         - longitude
         - radius
