@@ -39,8 +39,7 @@ paths:
                   type: number
                   format: float
                 radius:
-                  type: number
-                  format: float
+                  type: integer
                 category:
                   type: string
                 severity:
@@ -99,8 +98,7 @@ components:
           type: number
           format: float
         radius:
-          type: number
-          format: float
+          type: integer
         category:
           type: string
         severity:
