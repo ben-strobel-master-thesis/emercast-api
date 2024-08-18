@@ -79,6 +79,7 @@ components:
         - message
         - imageUrl
         - issuedAuthority
+        - issuerSignature
       properties:
         id:
           type: string
@@ -113,7 +114,10 @@ components:
         imageUrl:
           type: string
         issuedAuthority:
-          $ref: "#/components/schemas/AuthorityDTO"
+          type: string
+          format: uuid
+        issuerSignature:
+          type: string
         responsePublicKey:
           type: string
     BroadcastReplyDTO:
