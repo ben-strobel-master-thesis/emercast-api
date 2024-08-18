@@ -68,6 +68,7 @@ components:
         - id
         - created
         - modified
+        - systemMessage
         - forwardUntil
         - latitude
         - longitude
@@ -88,6 +89,8 @@ components:
         modified:
           type: integer
           format: int64
+        systemMessage:
+          type: boolean
         forwardUntil:
           type: integer
           format: int64
