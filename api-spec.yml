@@ -8,7 +8,7 @@ servers:
 security:
   - bearerAuth: []
 paths:
-  /message:
+  /broadcastMessage:
     post:
       summary: Create a new broadcast message
       operationId: postBroadcastMessage
@@ -53,6 +53,95 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/BroadcastMessageResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+  /login:
+    post:
+      summary: Login as an authority
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - loginName
+                - password
+              properties:
+                loginName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          $ref: '#/components/responses/LoginResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+  /authority:
+    post:
+      summary: Create a new authority
+      operationId: createNewAuthority
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - loginName
+                - password
+                - publicName
+                - jurisdictionDescription
+                - jurisdictionMarkers
+              properties:
+                loginName:
+                  type: string
+                password:
+                  type: string
+                publicName:
+                  type: string
+                jurisdictionDescription:
+                  type: string
+                jurisdictionMarkers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/JurisdictionMarkerDTO'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthorityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/ForbiddenResponse'
+    get:
+      summary: Get a page of authorities
+      operationId: getAuthorityPage
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        200:
+          $ref: '#/components/responses/AuthorityListResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+  /authority/hash:
+    get:
+      summary: Get hash of authority chain
+      operationId: getAuthorityChainHash
+      responses:
+        200:
+          $ref: '#/components/responses/AuthorityChainHashResponse'
         404:
           $ref: '#/components/responses/NotFoundResponse'
 components:
@@ -243,8 +332,48 @@ components:
         message:
           type: string
   responses:
+    AuthorityListResponse:
+      description: Response containing a list of authorities
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/AuthorityDTO"
+    AuthorityResponse:
+      description: Response containing an authority
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AuthorityDTO"
+    LoginResponse:
+      description: Login response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - authorityId
+              - token
+            properties:
+              authorityId:
+                type: string
+                format: uuid
+              token:
+                type: string
+    AuthorityChainHashResponse:
+      description: Response containing the current authority chain hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hash
+            properties:
+              hash:
+                type: string
     BroadcastMessageResponse:
-      description: Response containting a broadcast message
+      description: Response containing a broadcast message
       content:
         application/json:
           schema:
