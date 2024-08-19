@@ -62,6 +62,36 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    SystemBroadcastMessagePayloadDTO:
+      type: object
+      properties:
+        issuedPayload:
+          $ref: '#/components/schemas/SystemBroadcastMessageAuthorityIssuedPayloadDTO'
+        revokedPayload:
+          $ref: '#/components/schemas/SystemBroadcastMessageAuthorityIssuedPayloadDTO'
+    SystemBroadcastMessageAuthorityRevokedPayloadDTO:
+      type: object
+      required:
+        - authorityId
+        - revokedDate
+        - canBeDeletedAt
+      properties:
+        authorityId:
+          type: string
+          format: uuid
+        revokedDate:
+          type: integer
+          format: int64
+        canBeDeletedAt:
+          type: integer
+          format: int64
+    SystemBroadcastMessageAuthorityIssuedPayloadDTO:
+      type: object
+      required:
+        - authority
+      properties:
+        authority:
+          $ref: '#/components/schemas/AuthorityDTO'
     BroadcastMessageDTO:
       type: object
       required:
@@ -151,17 +181,56 @@ components:
       type: object
       required:
         - id
-        - parentId
-        - name
+        - created
+        - createdBy
+        - publicName
+        - jurisdictionMarkers
+        - keyPairValidUntil
+        - publicKeyBase64
       properties:
         id:
           type: string
           format: uuid
-        parentId:
+        created:
+          type: integer
+          format: int64
+        createdBy:
           type: string
           format: uuid
-        name:
+        publicName:
           type: string
+        jurisdictionMarkers:
+          type: array
+          items:
+            $ref: '#/components/schemas/JurisdictionMarkerDTO'
+        keyPairValidUntil:
+          type: integer
+          format: int64
+        publicKeyBase64:
+          type: string
+    JurisdictionMarkerDTO:
+      type: object
+      required:
+        - latitude
+        - longitude
+        - kind
+        - radiusMeter
+      properties:
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        kind:
+          $ref: '#/components/schemas/JurisdictionMarkerKindEnumDTO'
+        radiusMeter:
+          type: integer
+          format: int32
+    JurisdictionMarkerKindEnumDTO:
+      type: string
+      enum:
+        - CIRCLE
     ErrorDTO:
       type: object
       required:
