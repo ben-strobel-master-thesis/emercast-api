@@ -55,10 +55,33 @@ paths:
           $ref: '#/components/responses/BroadcastMessageResponse'
         404:
           $ref: '#/components/responses/NotFoundResponse'
+    get:
+      summary: Get a page of broadcastMessages
+      operationId: getBroadcastMessagesPage
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        200:
+          $ref: '#/components/responses/BroadcastMessageListResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
   /login:
     post:
       summary: Login as an authority
       operationId: login
+      security: []
       requestBody:
         required: true
         content:
@@ -117,6 +140,7 @@ paths:
     get:
       summary: Get a page of authorities
       operationId: getAuthorityPage
+      security: []
       parameters:
         - in: query
           name: page
@@ -139,6 +163,7 @@ paths:
     get:
       summary: Get hash of authority chain
       operationId: getAuthorityChainHash
+      security: []
       responses:
         200:
           $ref: '#/components/responses/AuthorityChainHashResponse'
@@ -378,6 +403,14 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/BroadcastMessageDTO"
+    BroadcastMessageListResponse:
+      description: Response containing a list of broadcast message
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/BroadcastMessageDTO"
     EmptyResponse:
       description: Empty response
     BadRequestResponse:
