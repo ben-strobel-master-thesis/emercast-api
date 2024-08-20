@@ -77,6 +77,16 @@ paths:
           $ref: '#/components/responses/BroadcastMessageListResponse'
         404:
           $ref: '#/components/responses/NotFoundResponse'
+  /broadcastMessage/hash:
+    get:
+      summary: Get hash of broadcastMessage chain
+      operationId: getBroadcastMessageChainHash
+      security: []
+      responses:
+        200:
+          $ref: '#/components/responses/HashResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
   /login:
     post:
       summary: Login as an authority
@@ -166,7 +176,7 @@ paths:
       security: []
       responses:
         200:
-          $ref: '#/components/responses/AuthorityChainHashResponse'
+          $ref: '#/components/responses/HashResponse'
         404:
           $ref: '#/components/responses/NotFoundResponse'
 components:
@@ -386,8 +396,8 @@ components:
                 format: uuid
               token:
                 type: string
-    AuthorityChainHashResponse:
-      description: Response containing the current authority chain hash
+    HashResponse:
+      description: Response containing a hash
       content:
         application/json:
           schema:
