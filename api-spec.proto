@@ -1,0 +1,31 @@
+message SystemBroadcastMessagePayloadPBO {
+  optional SystemBroadcastMessageAuthorityIssuedPayloadPBO issuedPayload = 1;
+  optional SystemBroadcastMessageAuthorityRevokedPayloadPBO revokedPayload = 2;
+}
+
+message SystemBroadcastMessageAuthorityRevokedPayloadPBO {
+  required string authorityId = 1;
+  required int64 revokedDate = 2;
+  required int64 canBeDeletedAt = 3;
+}
+
+message SystemBroadcastMessageAuthorityIssuedPayloadPBO {
+  required AuthorityPBO authority = 1;
+}
+
+message AuthorityPBO {
+  required string id = 1;
+  required int64 created = 2;
+  required string createdBy = 3;
+  required string publicName = 4;
+  required int64 keyPairValidUntil = 5;
+  required string publicKeyBase64 = 6;
+  repeated JurisdictionMarkerPBO jurisdictionMarkers = 7;
+}
+
+message JurisdictionMarkerPBO {
+  required float latitude = 1;
+  required float longitude = 2;
+  required string kind = 3;
+  required int32 radiusMeter = 4;
+}
