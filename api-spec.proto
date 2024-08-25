@@ -1,31 +1,37 @@
+syntax = "proto3";
+
+option java_package = "com.strobel.emercast.protobuf";
+option java_multiple_files = true;
+
 message SystemBroadcastMessagePayloadPBO {
-  optional SystemBroadcastMessageAuthorityIssuedPayloadPBO issuedPayload = 1;
-  optional SystemBroadcastMessageAuthorityRevokedPayloadPBO revokedPayload = 2;
+  SystemBroadcastMessageAuthorityIssuedPayloadPBO issuedPayload = 1;
+  SystemBroadcastMessageAuthorityRevokedPayloadPBO revokedPayload = 2;
 }
 
 message SystemBroadcastMessageAuthorityRevokedPayloadPBO {
-  required string authorityId = 1;
-  required int64 revokedDate = 2;
-  required int64 canBeDeletedAt = 3;
+  string authorityId = 1;
+  int64 revokedDate = 2;
+  int64 canBeDeletedAt = 3;
 }
 
 message SystemBroadcastMessageAuthorityIssuedPayloadPBO {
-  required AuthorityPBO authority = 1;
+  AuthorityPBO authority = 1;
 }
 
 message AuthorityPBO {
-  required string id = 1;
-  required int64 created = 2;
-  required string createdBy = 3;
-  required string publicName = 4;
-  required int64 keyPairValidUntil = 5;
-  required string publicKeyBase64 = 6;
+  string id = 1;
+  int64 created = 2;
+  string createdBy = 3;
+  string publicName = 4;
+  int64 keyPairValidUntil = 5;
+  string publicKeyBase64 = 6;
   repeated JurisdictionMarkerPBO jurisdictionMarkers = 7;
 }
 
+
 message JurisdictionMarkerPBO {
-  required float latitude = 1;
-  required float longitude = 2;
-  required string kind = 3;
-  required int32 radiusMeter = 4;
+  float latitude = 1;
+  float longitude = 2;
+  string kind = 3;
+  int32 radiusMeter = 4;
 }
