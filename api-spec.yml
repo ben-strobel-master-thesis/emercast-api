@@ -72,6 +72,11 @@ paths:
             type: integer
             format: int32
           required: true
+        - in: query
+          name: systemMessage
+          schema:
+            type: boolean
+          required: true
       responses:
         200:
           $ref: '#/components/responses/BroadcastMessageListResponse'
@@ -82,6 +87,12 @@ paths:
       summary: Get hash of broadcastMessage chain
       operationId: getBroadcastMessageChainHash
       security: []
+      parameters:
+        - in: query
+          name: systemMessage
+          schema:
+            type: boolean
+          required: true
       responses:
         200:
           $ref: '#/components/responses/HashResponse'
@@ -147,38 +158,6 @@ paths:
           $ref: '#/components/responses/BadRequestResponse'
         401:
           $ref: '#/components/responses/ForbiddenResponse'
-    get:
-      summary: Get a page of authorities
-      operationId: getAuthorityPage
-      security: []
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-            format: int32
-          required: true
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-            format: int32
-          required: true
-      responses:
-        200:
-          $ref: '#/components/responses/AuthorityListResponse'
-        404:
-          $ref: '#/components/responses/NotFoundResponse'
-  /authority/hash:
-    get:
-      summary: Get hash of authority chain
-      operationId: getAuthorityChainHash
-      security: []
-      responses:
-        200:
-          $ref: '#/components/responses/HashResponse'
-        404:
-          $ref: '#/components/responses/NotFoundResponse'
 components:
   securitySchemes:
     bearerAuth:
