@@ -200,7 +200,6 @@ components:
       required:
         - id
         - created
-        - modified
         - systemMessage
         - forwardUntil
         - latitude
@@ -218,9 +217,6 @@ components:
           type: string
           format: uuid
         created:
-          type: integer
-          format: int64
-        modified:
           type: integer
           format: int64
         systemMessage:
