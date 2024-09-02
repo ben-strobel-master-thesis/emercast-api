@@ -35,3 +35,29 @@ message JurisdictionMarkerPBO {
   string kind = 3;
   int32 radiusMeter = 4;
 }
+
+message BroadcastMessageInfoPBO {
+  string id = 1;
+  int64 created = 2;
+}
+
+message BroadcastMessageInfoListPBO {
+  repeated BroadcastMessageInfoPBO messages = 1;
+}
+
+message BroadcastMessagePBO {
+  string id = 1;
+  int64 created = 2;
+  bool systemMessage = 3;
+  int64 forwardUntil = 4;
+  float latitude = 5;
+  float longitude = 6;
+  int32 radius = 7;
+  string category = 8;
+  int32 severity = 9;
+  string title = 10;
+  string message = 11;
+  string imageUrl = 12;
+  string issuedAuthority = 13;
+  string issuerSignature = 14;
+}
