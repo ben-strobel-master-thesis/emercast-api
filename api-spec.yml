@@ -158,6 +158,38 @@ paths:
           $ref: '#/components/responses/BadRequestResponse'
         401:
           $ref: '#/components/responses/ForbiddenResponse'
+    get:
+      summary: Get an authority
+      operationId: getAuthority
+      responses:
+        200:
+          $ref: '#/components/responses/AuthorityResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+  /authorities:
+        get:
+          summary: Get a page of authorities
+          operationId: getAuthorityPage
+          parameters:
+            - in: query
+              name: page
+              schema:
+                type: integer
+                format: int32
+                minimum: 0
+              required: true
+            - in: query
+              name: pageSize
+              schema:
+                type: integer
+                format: int32
+                maximum: 20
+              required: true
+          responses:
+            200:
+              $ref: '#/components/responses/AuthorityListResponse'
+            404:
+              $ref: '#/components/responses/NotFoundResponse'
 components:
   securitySchemes:
     bearerAuth:
